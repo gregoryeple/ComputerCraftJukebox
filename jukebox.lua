@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
  
-version 1.2.0
+version 1.2.1
  
 Free to distribute/alter
 so long as proper credit to original
@@ -487,8 +487,6 @@ lengths["Lena Raine - Pigstep"]=150
 lengths["Lena Raine - otherside"]=197
 lengths["Samuel Åberg - 5"]=180
 -- Modded discs --
-lengths["Kain Vinosec - Endure Emptiness"]=204 --Botania
-lengths["Kain Vinosec - Fight For Quiescence"]=229 --Botania 
 lengths["LudoCrypt - Thime"]=315 --Alex's Mobs
 lengths["LudoCrypt - Daze"]=193 --Alex's Mobs
 lengths["Tim Rurkowski - Wanderer"]=179 --Biomes O' Plenty
@@ -496,12 +494,47 @@ lengths["Jonathing - Blinding Rage"]=232 --Blue Skies
 lengths["Jonathing - Defying Starlight"]=148 --Blue Skies
 lengths["Jonathing - Venomous Encounter"]=155 --Blue Skies
 lengths["Lachney - Population"]=238 --Blue Skies
+lengths["Kain Vinosec - Endure Emptiness"]=204 --Botania
+lengths["Kain Vinosec - Fight For Quiescence"]=229 --Botania
+lengths["izofar - Wither Waltz"]=254 -- Bygone Nether
+lengths["BooWho - coconut"]=110 -- Ecologics
+lengths["Lorian Ross - Kobblestone"]=184 -- Kobolds
+lengths["Llama song"]=92 --Industrial Agriculture
+lengths["Cama - Slither"]=122 -- Integrated Dungeons and Structures
+lengths["Cama - Calidum"]=196 -- Integrated Dungeons and Structures
+lengths["Water Droplets"]=20 -- Quark
+lengths["Ocean Waves"]=16 -- Quark
+lengths["Rainy Mood"]=5 -- Quark
+lengths["Heavy Wind"]=13 -- Quark
+lengths["Soothing Cinders"]=16 -- Quark
+lengths["Tick-Tock"]=1 -- Quark
+lengths["Cricket Song"]=1 -- Quark
+lengths["Packed Venue"]=10 -- Quark
+lengths["Kain Vinosec - Endermosh"]=190 -- Quark
+lengths["FantomenK - Playing With Power"]=290 -- Tetra Pak
+lengths["Rimsky Korsakov - Flight of the Bumblebee"]=206 -- The Bumblezone
+lengths["Rat Faced Boy - Honey Bee"]=218 -- The Bumblezone
+lengths["Jesterguy - Delve Deeper"]=230 -- The Conjurer
+lengths["Rotch Gwylt - Radiance"]=135 -- The Twilight Forest
+lengths["Rotch Gwylt - Steps"]=195 -- The Twilight Forest
+lengths["Rotch Gwylt - Superstitious"]=192 -- The Twilight Forest
+lengths["MrCompost - Home"]=217 -- The Twilight Forest
+lengths["MrCompost - Wayfarer"]=175 -- The Twilight Forest
+lengths["MrCompost - Findings"]=198 -- The Twilight Forest
+lengths["MrCompost - Maker"]=209 -- The Twilight Forest
+lengths["MrCompost - Thread"]=203 -- The Twilight Forest
+lengths["MrCompost - Motion"]=171 -- The Twilight Forest
+lengths["Screem - Mammoth"]=196 -- The Undergarden
+lengths["Screem - Limax Maximus"]=163 -- The Undergarden
+lengths["Screem - Relict"]=189 -- The Undergarden
+lengths["Screem - Gloomper Anthem"]=206 -- The Undergarden
  
 names={} -- modded discs with incorrect item descriptions
 names["item.blue_skies.blinding_rage.desc"]="Jonathing - Blinding Rage"
 names["item.blue_skies.defying_starlight.desc"]="Jonathing - Defying Starlight"
 names["item.blue_skies.venomous_encounter.desc"]="Jonathing - Venomous Encounter"
 names["item.blue_skies.population.desc"] = "Lachney - Population"
+names["item.conjurer_illager.music_disc_delve_deeper.desc"] = "Jesterguy - Delve Deeper"
  
 per=peripheral.getNames()
 drives={} --all the drives with audio wrapped in one variable. handy, right?
@@ -690,9 +723,9 @@ repeat --main loop
   elseif cx==6 or cx==7 then --skip was pressed
    skip()
   elseif cx>=9 and (not miniMode and cx<=15 or miniMode and cx<=10) then --shuffle was pressed
-   shuffle=not shuffle
+   shuffle = not shuffle
   elseif (not miniMode and cx>=17 and cx<=20) or (miniMode and cx==12) then --loop was pressed
-   loop =not loop 
+   loop = not loop 
   elseif tooManyDisks and cx==w-4 and displayStart>0 then --up was pressed
    displayStart = displayStart - 1
   elseif tooManyDisks and cx==w-2 and displayStart<#disks-(h-2) then --down was pressed
