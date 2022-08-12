@@ -23,7 +23,7 @@ Pastebin: [ztujAaKr](https://pastebin.com/ztujAaKr)
  - [**Kobolds!**](https://www.curseforge.com/minecraft/mc-mods/kobolds) - *1 disc*
  - [**Industrial Agriculture**](https://www.curseforge.com/minecraft/mc-mods/industrial-agriculture) - *1 disc*
  - [**Integrated Dungeons and Structures**](https://www.curseforge.com/minecraft/mc-mods/idas) - *2 discs*
- - [**Portal Gun**](https://www.curseforge.com/minecraft/mc-mods/portal-gun) - *2 discs*
+ - [**Portal Gun**](https://www.curseforge.com/minecraft/mc-mods/portal-gun) - *3 discs*
  - [**Quark**](https://www.curseforge.com/minecraft/mc-mods/quark) - *9 discs*
  - [**Tetra Pak**](https://www.curseforge.com/minecraft/mc-mods/tetra-pak) - *1 disc*
  - [**The Bumblezone**](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge) - *2 discs*
