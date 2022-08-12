@@ -1,22 +1,22 @@
 --[[
- 
+
 Jukebox program
 By The Juice
 Edited by Out-Feu
- 
-version 1.2.1
- 
+
+version 1.3.0
+
 Free to distribute/alter
 so long as proper credit to original
 author is maintained.
- 
+
 Simply connect some drives with music disks
 and an advanced monitor(at least two blocks wide)
 in any way and start this program
- 
+
 --]]
- 
- 
+
+
 function loadPref()
  if not fs.exists("jukeboxconfig") then
   setColors.text=colors.white
@@ -56,7 +56,7 @@ function loadPref()
   fil.close()
  end
 end
- 
+
 function savePref()
  fil=fs.open("jukeboxconfig","w")
  fil.writeLine(setColors.text)
@@ -77,7 +77,7 @@ function savePref()
  
  fil.close()
 end
- 
+
 function changePref()
  while true do
   mon.setBackgroundColor(colors.black)
@@ -114,6 +114,14 @@ function changePref()
   end
   mon.write("Loop by default")
   
+  mon.setCursorPos(1, 12)
+  if playing then
+   mon.setBackgroundColor(colors.green)
+  else
+   mon.setBackgroundColor(colors.red)
+  end
+  mon.write("Cacophony")
+  
   mon.setBackgroundColor(colors.black)
   
   mon.setCursorPos(1,8)
@@ -125,9 +133,8 @@ function changePref()
   mon.setCursorPos(1,10)
   mon.write("Back")
   
-  mon.setCursorPos(1,12)
+  mon.setCursorPos(1,14)
   mon.write("Close jukebox")
-  
   
   local eve,id,cx,cy
   eve,id,cx,cy=os.pullEvent("monitor_touch")
@@ -135,9 +142,9 @@ function changePref()
   if cy==3 then
    changeColors()
   elseif cy==4 then
-   playingDefault=not playingDefault
+   playingDefault = not playingDefault
   elseif cy==5 then
-   shuffleDefault=not shuffleDefault
+   shuffleDefault = not shuffleDefault
   elseif cy==6 then
   loopDefault = not loopDefault
   elseif cy==8 then
@@ -145,14 +152,22 @@ function changePref()
   elseif cy==9 then
    loadPref()
   elseif cy==10 then
+   stop()
    return false
   elseif cy==12 then
+   if playing then
+    stop()
+   else
+    playAll()
+   end
+  elseif cy==14 then
+   stop()
    return true
   end
   
  end
 end
- 
+
 function changeColors()
  while true do
   mon.setBackgroundColor(colors.black)
@@ -202,7 +217,7 @@ function changeColors()
   end
   mon.write("Disabled")
   
-   mon.setCursorPos(1,6)
+  mon.setCursorPos(1,6)
   mon.setBackgroundColor(setColors.selected)
   if setColors.selected==colors.white then
    mon.setTextColor(colors.black)
@@ -293,7 +308,7 @@ function changeColors()
   
  end
 end
- 
+
 function colorPicker()
  mon.setCursorPos(15,1)
  mon.setBackgroundColor(colors.white)
@@ -378,14 +393,14 @@ function colorPicker()
   error("uh oh! tell my daddy im broke!")
  end
 end
- 
- 
- 
+
+
+
 function restart() --restarts playback (more useful than it sounds)
  stop()
  play()
 end
- 
+
 function stop() --stops playback
  playing=false
  os.cancelTimer(timer)
@@ -393,14 +408,21 @@ function stop() --stops playback
  elapsed=0
  disk.stopAudio()
 end
- 
+
+function playAll() --starts all discs
+ playing = true
+ for k,v in pairs(drives) do
+  v.playAudio()
+ end
+end
+
 function play() --starts playback
  playing=true
  timer=os.startTimer(lengths[disks[track]])
  tickTimer=os.startTimer(0.25)
  drives[track].playAudio()
 end
- 
+
 function skip() --skips to the next track
  if not loop and #disks>1 then
   if shuffle then
@@ -419,7 +441,7 @@ function skip() --skips to the next track
  end
  restart() --see?
 end
- 
+
 function back() --goes back to the previous track
  if not loop then
   track=track-1
@@ -430,7 +452,7 @@ function back() --goes back to the previous track
  end
  restart()
 end
- 
+
 function skipto(tr) --skips to a particular track according to 'tr'
  if tr==track then
   return
@@ -441,7 +463,7 @@ function skipto(tr) --skips to a particular track according to 'tr'
  end
  restart()
 end
- 
+
 function updateDisplayStart()
  if tooManyDisks then
   if track-1 < displayStart then
@@ -451,11 +473,11 @@ function updateDisplayStart()
   end
  end
 end
- 
+
 function sortDriveByTitle(dr1, dr2)
  return getAudioTitle(dr1) < getAudioTitle(dr2)
 end
- 
+
 function getAudioTitle(drive)
  name = drive.getAudioTitle()
  if names[name] ~= nil then
@@ -463,12 +485,12 @@ function getAudioTitle(drive)
  end
  return name 
 end
- 
+
 -------------------------------------------------------------------------------
- 
- 
+
+
 disk.stopAudio() --stop all currently playing disks
- 
+
 lengths={} -- length of all the disks in seconds
 -- Vanilla discs --
 lengths["C418 - 13"]=180
@@ -499,7 +521,7 @@ lengths["Kain Vinosec - Fight For Quiescence"]=229 --Botania
 lengths["izofar - Wither Waltz"]=254 -- Bygone Nether
 lengths["BooWho - coconut"]=110 -- Ecologics
 lengths["Lorian Ross - Kobblestone"]=184 -- Kobolds
-lengths["Llama song"]=92 --Industrial Agriculture
+lengths["Llama Song"]=92 --Industrial Agriculture
 lengths["Cama - Slither"]=122 -- Integrated Dungeons and Structures
 lengths["Cama - Calidum"]=196 -- Integrated Dungeons and Structures
 lengths["Water Droplets"]=20 -- Quark
@@ -528,35 +550,42 @@ lengths["Screem - Mammoth"]=196 -- The Undergarden
 lengths["Screem - Limax Maximus"]=163 -- The Undergarden
 lengths["Screem - Relict"]=189 -- The Undergarden
 lengths["Screem - Gloomper Anthem"]=206 -- The Undergarden
- 
+
 names={} -- modded discs with incorrect item descriptions
 names["item.blue_skies.blinding_rage.desc"]="Jonathing - Blinding Rage"
 names["item.blue_skies.defying_starlight.desc"]="Jonathing - Defying Starlight"
 names["item.blue_skies.venomous_encounter.desc"]="Jonathing - Venomous Encounter"
 names["item.blue_skies.population.desc"] = "Lachney - Population"
 names["item.conjurer_illager.music_disc_delve_deeper.desc"] = "Jesterguy - Delve Deeper"
- 
+
 per=peripheral.getNames()
 drives={} --all the drives with audio wrapped in one variable. handy, right?
 for k,v in pairs(per) do
  if peripheral.getType(v)=="drive" then
   if peripheral.wrap(v).hasAudio() then
-   drives[#drives+1]=peripheral.wrap(v)
+   if lengths[getAudioTitle(peripheral.wrap(v))] ~= nil then
+    drives[#drives+1]=peripheral.wrap(v)
+   else
+    term.setTextColor(colors.red)
+    print("Track not found '" .. getAudioTitle(peripheral.wrap(v)) .. "'")
+    term.setTextColor(colors.white)
+   end
   end
  elseif peripheral.getType(v)=="monitor" then
   mon=peripheral.wrap(v)
  end
 end
 per=nil
- 
+
 table.sort(drives, sortDriveByTitle)
 disks={} --the name of the disk in the drive in the same corresponding 'drives' drive
 for k,v in pairs(drives) do
  disks[k]=getAudioTitle(drives[k])
 end
- 
+print("Loaded " .. table.getn(disks) .. " tracks")
+
 setColors={}
- 
+
 playing=false --i'm not going to insult you by explaining this one
 shuffle=false --when true; selects a random track when track is over
 loop=false --when true; loop the current track
@@ -567,22 +596,22 @@ track=1 --selected track
 timer=0 --token of the timer that signals the end of a track
 elapsed=0 --time that track was started
 tickTimer=0 --token of the timer that signals to update 'elapsed'
-minSize=21 --width under which buttons labels are shorten
+minSize=21 --size under which buttons labels are shorten
 displayStart=0 --track to start the display on
 tooManyDiscs=false  --set to true when the number of discs is greater than the height of the monitor
- 
+
 loadPref()
- 
- 
+
+
 --------------------------------------------------------------------------------
- 
+
 if shuffle then
  skip()
 end
 if playing then
  play()
 end
- 
+
 repeat --main loop
  
  --refresh display
@@ -644,16 +673,16 @@ repeat --main loop
     local blueLeng=(elapsed)/lengths[disks[track]]*leng
     for n=1,leng do
      if n>math.ceil(blueLeng) then
-         mon.setBackgroundColor(colors.green)
-        elseif n==math.ceil(blueLeng) then
-         if n-blueLeng<.3333 then
-          mon.setBackgroundColor(setColors.progress3)
-         elseif n-blueLeng<.6666 then
-          mon.setBackgroundColor(setColors.progress2)
-         else
-          mon.setBackgroundColor(setColors.progress1)
-         end
-        end
+	     mon.setBackgroundColor(colors.green)
+	    elseif n==math.ceil(blueLeng) then
+	     if n-blueLeng<.3333 then
+	      mon.setBackgroundColor(setColors.progress3)
+	     elseif n-blueLeng<.6666 then
+	      mon.setBackgroundColor(setColors.progress2)
+	     else
+	      mon.setBackgroundColor(setColors.progress1)
+	     end
+	    end
      mon.write(string.sub(v,n,n))
     end
    else
