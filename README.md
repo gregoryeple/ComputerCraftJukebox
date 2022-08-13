@@ -4,11 +4,15 @@ A revised version of the Jukebox program originally made by **The Juice**. ([Ori
 
 Added some features and improvements as well as moded music disc support.
 
-Tested and works with every music disc in these modpacks
- - [**All the Mods 7**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-7) - **1.18.1** - *v0.2.45*
+Tested and works with every music disc in these modpacks :
  - [**TNP Limitless 5**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-5) - **1.18.2** - *v2.17.1*
+ - [**All the Mods 7**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-7) - **1.18.1** - *v0.2.45*
+ - [**FTB Presents Direwolf20 1.16**](https://www.feed-the-beast.com/modpack/79_ftb_presents_direwolf20_1_16) - **1.16.5** - *v1.12.0*
+ - [**FTB Revelation**](https://www.feed-the-beast.com/modpack/35_ftb_revelation) - **1.12.2** - *v3.4.0*
+ - [**FTB Infinity Evolved 1.7**](https://www.feed-the-beast.com/modpack/23_ftb_infinity_evolved_1_7) - **1.7.10** - *v3.1.0*
+ - [**FTB Presents Direwolf20**](https://www.feed-the-beast.com/modpack/14_ftb_presents_direwolf20) - **1.7.10** - *v1.10.0*
 
-Pastebin: [ztujAaKr](https://pastebin.com/ztujAaKr)
+Pastebin: [X1f6K7Ce](https://pastebin.com/X1f6K7Ce)
 
 # Supported Mods
 
@@ -25,6 +29,7 @@ Pastebin: [ztujAaKr](https://pastebin.com/ztujAaKr)
  - [**Integrated Dungeons and Structures**](https://www.curseforge.com/minecraft/mc-mods/idas) - *2 discs*
  - [**Portal Gun**](https://www.curseforge.com/minecraft/mc-mods/portal-gun) - *3 discs*
  - [**Quark**](https://www.curseforge.com/minecraft/mc-mods/quark) - *9 discs*
+ - [**Rats**](https://www.curseforge.com/minecraft/mc-mods/rats) - *2 discs*
  - [**Tetra Pak**](https://www.curseforge.com/minecraft/mc-mods/tetra-pak) - *1 disc*
  - [**The Bumblezone**](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge) - *2 discs*
  - [**The Conjurer**](https://www.curseforge.com/minecraft/mc-mods/the-conjurer) - *1 disc*
