@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.3.2
+version 1.3.3
 
 Free to distribute/alter
 so long as proper credit to original
@@ -526,6 +526,7 @@ lengths["qwertygiy - Spyder"]=135 --Hardcore Ender Expension
 lengths["qwertygiy - Onion"]=210 --Hardcore Ender Expension
 lengths["qwertygiy - Crying Soul"]=122 --Hardcore Ender Expension
 lengths["Lorian Ross - Kobblestone"]=184 --Kobolds
+lengths["izofar - Bastille Blues"]=200 --It Takes A Pillage
 lengths["Llama Song"]=92 --Industrial Agriculture
 lengths["Cama - Slither"]=122 --Integrated Dungeons and Structures
 lengths["Cama - Calidum"]=196 --Integrated Dungeons and Structures
@@ -543,6 +544,7 @@ lengths["Packed Venue"]=10 --Quark
 lengths["Kain Vinosec - Endermosh"]=190 --Quark
 lengths["C418 - Mice on Venus"]=180 --Rats
 lengths["C418 - Living Mice"]=282 --Rats
+lengths["Partyp - Pancake Music"]=230 --Supplementaries
 lengths["FantomenK - Playing With Power"]=290 --Tetra Pak
 lengths["Rimsky Korsakov - Flight of the Bumblebee"]=206 --The Bumblezone
 lengths["Rat Faced Boy - Honey Bee"]=218 --The Bumblezone
