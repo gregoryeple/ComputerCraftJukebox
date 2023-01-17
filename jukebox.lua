@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.3.3
+version 1.3.4
 
 Free to distribute/alter
 so long as proper credit to original
@@ -418,7 +418,7 @@ function play() --starts playback
  drives[track].playAudio()
 end
 
-function skip() --skips to the next track
+function skip(playNext) --skips to the next track
  if not loop and #disks>1 then
   if shuffle then
    local rd
@@ -434,7 +434,9 @@ function skip() --skips to the next track
   end
   updateDisplayStart()
  end
- restart() --see?
+ if playNext then
+  restart() --see?
+ end
 end
 
 function back() --goes back to the previous track
@@ -507,6 +509,7 @@ lengths["LudoCrypt - Thime"]=315 --Alex's Mobs
 lengths["LudoCrypt - Daze"]=193 --Alex's Mobs
 lengths["Tim Rurkowski - Wanderer"]=179 --Biomes O' Plenty
 lengths["???"]=190 --Biomes O' Plenty
+lengths["Bleeding Edge of the Hidden Realm"]=215 --Blood Magic
 lengths["Jonathing - Blinding Rage"]=232 --Blue Skies
 lengths["Jonathing - Defying Starlight"]=148 --Blue Skies
 lengths["Jonathing - Venomous Encounter"]=155 --Blue Skies
@@ -526,10 +529,11 @@ lengths["qwertygiy - Spyder"]=135 --Hardcore Ender Expension
 lengths["qwertygiy - Onion"]=210 --Hardcore Ender Expension
 lengths["qwertygiy - Crying Soul"]=122 --Hardcore Ender Expension
 lengths["Lorian Ross - Kobblestone"]=184 --Kobolds
-lengths["izofar - Bastille Blues"]=200 --It Takes A Pillage
 lengths["Llama Song"]=92 --Industrial Agriculture
 lengths["Cama - Slither"]=122 --Integrated Dungeons and Structures
-lengths["Cama - Calidum"]=196 --Integrated Dungeons and Structures
+lengths["Cama - calidum"]=196 --Integrated Dungeons and Structures
+lengths["izofar - Bastille Blues"]=200 --It Takes a Pillage
+lengths["Construct Dance Mix"]=164 --Mana and Artifice
 lengths["Valve - Still Alive"]=180 --Portal Gun
 lengths["Valve - Radio Loop"]=22 --Portal Gun
 lengths["Valve - Want You Gone"]=140 --Portal Gun
@@ -617,7 +621,7 @@ loadPref()
 --------------------------------------------------------------------------------
 
 if shuffle then
- skip()
+ skip(false)
 end
 if playing then
  play()
@@ -735,7 +739,7 @@ repeat --main loop
  --test event
  if eve=="timer" then --the timer ended
   if id==timer then
-   skip()
+   skip(true)
   elseif id==tickTimer then
    tickTimer=os.startTimer(0.25)
    elapsed=elapsed+0.25
@@ -759,7 +763,7 @@ repeat --main loop
     play()
    end
   elseif cx==6 or cx==7 then --skip was pressed
-   skip()
+   skip(true)
   elseif cx>=9 and (not miniMode and cx<=15 or miniMode and cx<=10) then --shuffle was pressed
    shuffle = not shuffle
   elseif (not miniMode and cx>=17 and cx<=20) or (miniMode and cx==12) then --loop was pressed
