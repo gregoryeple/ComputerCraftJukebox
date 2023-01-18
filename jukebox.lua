@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.3.4
+version 1.3.5
 
 Free to distribute/alter
 so long as proper credit to original
@@ -505,8 +505,12 @@ lengths["Lena Raine - Pigstep"]=150
 lengths["Lena Raine - otherside"]=197
 lengths["Samuel Åberg - 5"]=180
 -- Modded discs --
+lengths["adoghr - 0308"]=122 --Additional Additions
+lengths["adoghr - 1007"]=162 --Additional Additions
+lengths["adoghr - 1507"]=214 --Additional Additions
 lengths["LudoCrypt - Thime"]=315 --Alex's Mobs
 lengths["LudoCrypt - Daze"]=193 --Alex's Mobs
+lengths["Firel - Aria Biblio"]=252 --Ars Nouveau
 lengths["Tim Rurkowski - Wanderer"]=179 --Biomes O' Plenty
 lengths["???"]=190 --Biomes O' Plenty
 lengths["Bleeding Edge of the Hidden Realm"]=215 --Blood Magic
@@ -517,6 +521,10 @@ lengths["Lachney - Population"]=238 --Blue Skies
 lengths["Kain Vinosec - Endure Emptiness"]=204 --Botania
 lengths["Kain Vinosec - Fight For Quiescence"]=229 --Botania
 lengths["izofar - Wither Waltz"]=254 --Bygone Nether
+lengths["Cinematic Danger Background Music | No Copyright"]=170 --Cataclysm Mod
+lengths["??Symphony - God of Blaze"]=128 --Cataclysm Mod
+lengths["Ean Grimm - Eternal"]=148 --Cataclysm Mod
+lengths["RedWolf - The Bright Side"]=160 --Create Confectionery
 lengths["BooWho - coconut"]=110 --Ecologics
 lengths["qwertygiy - Banjolic"]=111 --Hardcore Ender Expension
 lengths["qwertygiy - In The End"]=224 --Hardcore Ender Expension
@@ -530,6 +538,8 @@ lengths["qwertygiy - Onion"]=210 --Hardcore Ender Expension
 lengths["qwertygiy - Crying Soul"]=122 --Hardcore Ender Expension
 lengths["Lorian Ross - Kobblestone"]=184 --Kobolds
 lengths["Llama Song"]=92 --Industrial Agriculture
+lengths["LudoCrypt - flush"]=262 --Infernal Expansion
+lengths["LudoCrypt - Soul Spunk"]=234 --Infernal Expansion
 lengths["Cama - Slither"]=122 --Integrated Dungeons and Structures
 lengths["Cama - calidum"]=196 --Integrated Dungeons and Structures
 lengths["izofar - Bastille Blues"]=200 --It Takes a Pillage
@@ -548,10 +558,14 @@ lengths["Packed Venue"]=10 --Quark
 lengths["Kain Vinosec - Endermosh"]=190 --Quark
 lengths["C418 - Mice on Venus"]=180 --Rats
 lengths["C418 - Living Mice"]=282 --Rats
+lengths["Luz - Frosty Snig"]=186 --Snow Pig
+lengths["STiiX - A Carol"]=160 --Snowy Spirit
 lengths["Partyp - Pancake Music"]=230 --Supplementaries
 lengths["FantomenK - Playing With Power"]=290 --Tetra Pak
 lengths["Rimsky Korsakov - Flight of the Bumblebee"]=206 --The Bumblezone
 lengths["Rat Faced Boy - Honey Bee"]=218 --The Bumblezone
+lengths["LudoCrypt - Bee-laxing with the Hom-bees"]=300 --The Bumblezone
+lengths["LudoCrypt - La Bee-da Loca"]=176 --The Bumblezone
 lengths["Jesterguy - Delve Deeper"]=230 --The Conjurer
 lengths["Rotch Gwylt - Radiance"]=135 --The Twilight Forest
 lengths["Rotch Gwylt - Steps"]=195 --The Twilight Forest
@@ -566,6 +580,12 @@ lengths["Screem - Mammoth"]=196 --The Undergarden
 lengths["Screem - Limax Maximus"]=163 --The Undergarden
 lengths["Screem - Relict"]=189 --The Undergarden
 lengths["Screem - Gloomper Anthem"]=206 --The Undergarden
+lengths["Bramble"]=122 --ViesCraft Machines
+lengths["Castle"]=106 --ViesCraft Machines
+lengths["Dire"]=186 --ViesCraft Machines
+lengths["Jungle"]=168 --ViesCraft Machines
+lengths["Storms"]=98 --ViesCraft Machines
+lengths["Timescar"]=145 --ViesCraft Machines
 
 names={} --modded discs with incorrect item descriptions
 names["item.blue_skies.blinding_rage.desc"] = "Jonathing - Blinding Rage"
@@ -684,7 +704,7 @@ repeat --main loop
    mon.setCursorPos(1,k+2-displayStart)
    if k==track then
     mon.setBackgroundColor(setColors.progress3)
-    local leng=string.len(v)
+    local leng=math.min(string.len(v), w)
     local blueLeng=(elapsed)/lengths[disks[track]]*leng
     for n=1,leng do
      if n>math.ceil(blueLeng) then
