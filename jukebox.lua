@@ -4,18 +4,49 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.3.5
+version 1.4.0
 
 Free to distribute/alter
 so long as proper credit to original
 author is maintained.
 
 Simply connect some drives with music disks
-and an advanced monitor(at least two blocks wide)
+and an advanced monitor (at least two blocks wide)
 in any way and start this program
 
 --]]
 
+function loadJukebox()
+ per = peripheral.getNames()
+ drives = {}
+ for k,v in pairs(per) do
+  if peripheral.getType(v) == "drive" then
+   if peripheral.wrap(v).hasAudio() then
+    if lengths[getAudioTitle(peripheral.wrap(v))] ~= nil then
+     drives[#drives+1] = peripheral.wrap(v)
+    else
+     term.setTextColor(colors.red)
+     print("Track not found '" .. getAudioTitle(peripheral.wrap(v)) .. "'")
+     term.setTextColor(colors.white)
+    end
+   elseif peripheral.wrap(v).isDiskPresent() then
+    term.setTextColor(colors.red)
+    print("A disk drive contains an invalid item")
+    term.setTextColor(colors.white)
+   end
+  elseif peripheral.getType(v )== "monitor" then
+   mon = peripheral.wrap(v)
+  end
+ end
+ per = nil
+
+ table.sort(drives, sortDriveByTitle)
+ disks = {}
+ for k,v in pairs(drives) do
+  disks[k] = getAudioTitle(drives[k])
+ end
+ print("Loaded " .. table.getn(disks) .. " tracks")
+end
 
 function loadPref()
  if not fs.exists("jukeboxconfig") then
@@ -114,7 +145,7 @@ function changePref()
   end
   mon.write("Loop by default")
 
-  mon.setCursorPos(1, 12)
+  mon.setCursorPos(1, 14)
   if playing then
    mon.setBackgroundColor(colors.green)
   else
@@ -122,18 +153,22 @@ function changePref()
   end
   mon.write("Cacophony")
 
+  mon.setBackgroundColor(colors.blue)
+  mon.setCursorPos(1, 8)
+  mon.write("Reload Jukebox")
+  
   mon.setBackgroundColor(colors.black)
   
-  mon.setCursorPos(1,8)
+  mon.setCursorPos(1, 10)
   mon.write("Save")
 
-  mon.setCursorPos(1,9)
+  mon.setCursorPos(1, 11)
   mon.write("Load")
 
-  mon.setCursorPos(1,10)
+  mon.setCursorPos(1, 12)
   mon.write("Back")
 
-  mon.setCursorPos(1,14)
+  mon.setCursorPos(1, 16)
   mon.write("Close jukebox")
 
   local eve,id,cx,cy
@@ -148,19 +183,21 @@ function changePref()
   elseif cy==6 then
   loopDefault = not loopDefault
   elseif cy==8 then
-   savePref()
-  elseif cy==9 then
-   loadPref()
+   loadJukebox()
   elseif cy==10 then
+   savePref()
+  elseif cy==11 then
+   loadPref()
+  elseif cy==12 then
    stop()
    return false
-  elseif cy==12 then
+  elseif cy==14 then
    if playing then
     stop()
    else
     playAll()
    end
-  elseif cy==14 then
+  elseif cy==16 then
    stop()
    return true
   end
@@ -259,7 +296,7 @@ function changeColors()
   else
    mon.setTextColor(colors.white)
   end
-  mon.write("p button backgnd")
+  mon.write("p button background")
 
   mon.setCursorPos(1,11)
   mon.setTextColor(setColors.prefText)
@@ -504,13 +541,25 @@ lengths["C418 - wait"]=240
 lengths["Lena Raine - Pigstep"]=150
 lengths["Lena Raine - otherside"]=197
 lengths["Samuel Åberg - 5"]=180
+lengths["Aaron Cherof - Relic"]=220
 -- Modded discs --
 lengths["adoghr - 0308"]=122 --Additional Additions
 lengths["adoghr - 1007"]=162 --Additional Additions
 lengths["adoghr - 1507"]=214 --Additional Additions
+lengths["Lachney - Legacy"]=296 --Aether: Lost Content
+lengths["AetherAudio - Aerwhale"]=178 --Aether II
+lengths["Moorziey - Demise"]=300 --Aether II
+lengths["Emile van Krieken - Approaches"]=275 --Aether II
+lengths["Emile van Krieken - ???"]=98 --Aether II
 lengths["LudoCrypt - Thime"]=315 --Alex's Mobs
 lengths["LudoCrypt - Daze"]=193 --Alex's Mobs
 lengths["Firel - Aria Biblio"]=252 --Ars Nouveau
+lengths["Thistle - The Sound of Glass"]=184 --Ars Nouveau
+lengths["Firel - The Wild Hunt"]=120 --Ars Nouveau
+lengths["Firel - Strange And Alien"]=266 --BetterEnd Forge
+lengths["Firel - Grasping At Stars"]=528 --BetterEnd Forge
+lengths["Firel - Endseeker"]=462 --BetterEnd Forge
+lengths["Firel - Eo Dracona"]=360 --BetterEnd Forge
 lengths["Tim Rurkowski - Wanderer"]=179 --Biomes O' Plenty
 lengths["???"]=190 --Biomes O' Plenty
 lengths["Bleeding Edge of the Hidden Realm"]=215 --Blood Magic
@@ -523,9 +572,50 @@ lengths["Kain Vinosec - Fight For Quiescence"]=229 --Botania
 lengths["izofar - Wither Waltz"]=254 --Bygone Nether
 lengths["Cinematic Danger Background Music | No Copyright"]=170 --Cataclysm Mod
 lengths["??Symphony - God of Blaze"]=128 --Cataclysm Mod
+lengths["??Symphony - vs Titans"]=148 --Cataclysm Mod
+lengths["??Symphony - Endless Storm"]=143 --Cataclysm Mod
 lengths["Ean Grimm - Eternal"]=148 --Cataclysm Mod
+lengths["Sinyells - Monster Fight"]=184 --Cataclysm Mod
+lengths["C418 - Minecraft"]=234 --Charm
+lengths["C418 - Clark"]=192 --Charm
+lengths["C418 - Sweden"]=216 --Charm
+lengths["C418 - Subwoofer Lullaby"]=209 --Charm
+lengths["C418 - Haggstrom"]=204 --Charm
+lengths["C418 - Danny"]=255 --Charm
+lengths["C418 - Key"]=65 --Charm
+lengths["C418 - Oxygène"]=65 --Charm
+lengths["C418 - Dry Hands"]=69 --Charm
+lengths["C418 - Wet Hands"]=90 --Charm
+lengths["C418 - Biome Fest"]=378 --Charm
+lengths["C418 - Blind Spots"]=333 --Charm
+lengths["C418 - Haunt Muskie"]=362 --Charm
+lengths["C418 - Aria Math"]=310 --Charm
+lengths["C418 - Dreiton"]=497 --Charm
+lengths["C418 - Taswell"]=516 --Charm
+lengths["C418 - Concrete Halls"]=234 --Charm
+lengths["C418 - Dead Voxel"]=296 --Charm
+lengths["C418 - Warmth"]=239 --Charm
+lengths["C418 - Ballad of the Cats"]=276 --Charm
+lengths["C418 - Mutation"]=185 --Charm
+lengths["C418 - Moog City 2"]=180 --Charm
+lengths["C418 - Beginning 2"]=176 --Charm
+lengths["C418 - Floating Trees"]=245 --Charm
+lengths["C418 - Axolotl"]=303 --Charm
+lengths["C418 - Dragon Fish"]=372 --Charm
+lengths["C418 - Shuniji"]=244 --Charm
+lengths["C418 - Boss"]=346 --Charm
+lengths["C418 - The End"]=905 --Charm
+lengths["C418 - Mice on Venus"]=282 --Charm --Rats
+lengths["C418 - Living Mice"]=178 --Charm --Rats
+lengths["Dance with Golems -Flan"]=360 --Craft and hunt
 lengths["RedWolf - The Bright Side"]=160 --Create Confectionery
 lengths["BooWho - coconut"]=110 --Ecologics
+lengths["Kitsune² - Parousia"]=185 --Eidolon
+lengths["hatsondogs - Leaving Home"]=155 --Environmental
+lengths["Mista Jub - Slabrave"]=112 --Environmental
+lengths["Swordland"]=195 --ExtraBotany
+lengths["Salvation"]=48 --ExtraBotany
+lengths["Mr. Esuoh - Crashing Tides"]=176 --Fins and Tails
 lengths["qwertygiy - Banjolic"]=111 --Hardcore Ender Expension
 lengths["qwertygiy - In The End"]=224 --Hardcore Ender Expension
 lengths["qwertygiy - Asteroid"]=60 --Hardcore Ender Expension
@@ -544,6 +634,11 @@ lengths["Cama - Slither"]=122 --Integrated Dungeons and Structures
 lengths["Cama - calidum"]=196 --Integrated Dungeons and Structures
 lengths["izofar - Bastille Blues"]=200 --It Takes a Pillage
 lengths["Construct Dance Mix"]=164 --Mana and Artifice
+lengths["LudoCrypt - Petiole"]=160 --Mowzie's Mobs
+lengths["Dion - The Wanderer"]=167 --NuclearCraft
+lengths["Skeeter Davis - The End of the World"]=178 --NuclearCraft
+lengths["Dire Straits - Money For Nothing"]=315 --NuclearCraft
+lengths["Ur-Quan Master - Hyperspace"]=185 --NuclearCraft
 lengths["Valve - Still Alive"]=180 --Portal Gun
 lengths["Valve - Radio Loop"]=22 --Portal Gun
 lengths["Valve - Want You Gone"]=140 --Portal Gun
@@ -556,17 +651,37 @@ lengths["Tick-Tock"]=1 --Quark
 lengths["Cricket Song"]=1 --Quark
 lengths["Packed Venue"]=10 --Quark
 lengths["Kain Vinosec - Endermosh"]=190 --Quark
-lengths["C418 - Mice on Venus"]=180 --Rats
-lengths["C418 - Living Mice"]=282 --Rats
 lengths["Luz - Frosty Snig"]=186 --Snow Pig
 lengths["STiiX - A Carol"]=160 --Snowy Spirit
 lengths["Partyp - Pancake Music"]=230 --Supplementaries
 lengths["FantomenK - Playing With Power"]=290 --Tetra Pak
+lengths["Emile van Krieken - Ascending Dawn"]=350 --The Aether --Aether II
+lengths["Noisestorm - Aether Tune"]=150 --The Aether
+lengths["Voyed - Welcoming Skies"]=217 --The Aether
+lengths["Jon Lachney - Legacy"]=296 --The Aether
+lengths["Voog2 - Astatos"]=366 --The Betweenlands
+lengths["Voog2 - Between You And Me"]=300 --The Betweenlands
+lengths["Voog2 - Christmas On The Marsh"]=220 --The Betweenlands
+lengths["Voog2 - The Explorer"]=400 --The Betweenlands
+lengths["Voog2 - Hag Dance"]=280 --The Betweenlands
+lengths["Voog2 - Lonely Fire"]=228 --The Betweenlands
+lengths["..."]=65 --The Betweenlands
+lengths["Voog2 - Ancient"]=182 --The Betweenlands
+lengths["Voog2 - Beneath A Green Sky"]=310 --The Betweenlands
+lengths["Voog2 - Rave In A Cave"]=228 --The Betweenlands
+lengths["Voog2 - Onwards"]=212 --The Betweenlands
+lengths["Voog2 - Stuck In The Mud"]=278 --The Betweenlands
+lengths["Voog2 - Wandering Wisps"]=205 --The Betweenlands
+lengths["Voog2 - Waterlogged"]=196 --The Betweenlands
+lengths["Rotch Gwylt - Deep Water"]=155 --The Betweenlands
 lengths["Rimsky Korsakov - Flight of the Bumblebee"]=206 --The Bumblezone
 lengths["Rat Faced Boy - Honey Bee"]=218 --The Bumblezone
 lengths["LudoCrypt - Bee-laxing with the Hom-bees"]=300 --The Bumblezone
 lengths["LudoCrypt - La Bee-da Loca"]=176 --The Bumblezone
 lengths["Jesterguy - Delve Deeper"]=230 --The Conjurer
+lengths["Mista Jub - Kilobyte"]=165 --The Endergetic Expansion
+lengths["Blue Duck - Galactic Wave"]=157 --The Outer End
+lengths["Pyrocide - Unknown Frontier"]=66 --The Outer End
 lengths["Rotch Gwylt - Radiance"]=135 --The Twilight Forest
 lengths["Rotch Gwylt - Steps"]=195 --The Twilight Forest
 lengths["Rotch Gwylt - Superstitious"]=192 --The Twilight Forest
@@ -580,6 +695,8 @@ lengths["Screem - Mammoth"]=196 --The Undergarden
 lengths["Screem - Limax Maximus"]=163 --The Undergarden
 lengths["Screem - Relict"]=189 --The Undergarden
 lengths["Screem - Gloomper Anthem"]=206 --The Undergarden
+lengths["Lonesome Avenue (YouTube Audio Library)"]=185 --Tinker I/O
+lengths["C418 - dog"]=146 --Variant16x
 lengths["Bramble"]=122 --ViesCraft Machines
 lengths["Castle"]=106 --ViesCraft Machines
 lengths["Dire"]=186 --ViesCraft Machines
@@ -593,33 +710,15 @@ names["item.blue_skies.defying_starlight.desc"] = "Jonathing - Defying Starlight
 names["item.blue_skies.venomous_encounter.desc"] = "Jonathing - Venomous Encounter"
 names["item.blue_skies.population.desc"] = "Lachney - Population"
 names["item.conjurer_illager.music_disc_delve_deeper.desc"] = "Jesterguy - Delve Deeper"
+names["block.supplementaries.pancake.desc"] = "Partyp - Pancake Music"
+names["AetherAudio - Aerwhale§r"]="AetherAudio - Aerwhale"
+names["Moorziey - Demise§r"]="Moorziey - Demise"
+names["Emile van Krieken - Approaches§r"]="Emile van Krieken - Approaches"
+names["Emile van Krieken - Ascending Dawn§r"]= "Emile van Krieken - Ascending Dawn"
+names["Emile van Krieken - ???§r"]="Emile van Krieken - ???"
 
-per=peripheral.getNames()
-drives={} --all the drives with audio wrapped in one variable. handy, right?
-for k,v in pairs(per) do
- if peripheral.getType(v)=="drive" then
-  if peripheral.wrap(v).hasAudio() then
-   if lengths[getAudioTitle(peripheral.wrap(v))] ~= nil then
-    drives[#drives+1]=peripheral.wrap(v)
-   else
-    term.setTextColor(colors.red)
-    print("Track not found '" .. getAudioTitle(peripheral.wrap(v)) .. "'")
-    term.setTextColor(colors.white)
-   end
-  end
- elseif peripheral.getType(v)=="monitor" then
-  mon=peripheral.wrap(v)
- end
-end
-per=nil
-
-table.sort(drives, sortDriveByTitle)
-disks={} --the name of the disk in the drive in the same corresponding 'drives' drive
-for k,v in pairs(drives) do
- disks[k]=getAudioTitle(drives[k])
-end
-print("Loaded " .. table.getn(disks) .. " tracks")
-
+drives = {} --all the drives with audio wrapped in one variable. handy, right?
+disks = {} --the name of the disk in the drive in the same corresponding 'drives' drive
 setColors={}
 
 playing=false --i'm not going to insult you by explaining this one
@@ -633,9 +732,11 @@ timer=0 --token of the timer that signals the end of a track
 elapsed=0 --time that track was started
 tickTimer=0 --token of the timer that signals to update 'elapsed'
 minSize=21 --size under which buttons labels are shorten
+minPrefSize=12 --size under which the preference buttons not shown
 displayStart=0 --track to start the display on
 tooManyDiscs=false  --set to true when the number of discs is greater than the height of the monitor
 
+loadJukebox()
 loadPref()
 
 --------------------------------------------------------------------------------
@@ -652,6 +753,7 @@ repeat --main loop
  --refresh display
  w, h = mon.getSize()
  miniMode = w < minSize
+ showPref = h >= minPrefSize
  tooManyDisks = h - 2 < #disks
 
  mon.setTextColor(setColors.text)
@@ -745,10 +847,12 @@ repeat --main loop
   mon.write("v")
  end
 
- mon.setCursorPos(w,1)
- mon.setBackgroundColor(setColors.prefBack)
- mon.setTextColor(setColors.prefText)
- mon.write("p")
+ if showPref then
+  mon.setCursorPos(w,1)
+  mon.setBackgroundColor(setColors.prefBack)
+  mon.setTextColor(setColors.prefText)
+  mon.write("p")
+ end
 
  --wait for event
  local eve,id,cx,cy
@@ -766,33 +870,33 @@ repeat --main loop
   end
 
  else --the monitor was pressed
-  if cy>1 then --a track was pressed
-   if cy>2 and cy<#disks+3 then
+  if cy > 1 then --a track was pressed
+   if cy > 2 and cy < #disks + 3 then
     if tooManyDisks then
-     skipto(cy-2+displayStart)
+     skipto(cy - 2 + displayStart)
     else
-     skipto(cy-2)
+     skipto(cy - 2)
     end
    end
-  elseif cx<=2 then --back was pressed
+  elseif cx <= 2 then --back was pressed
    back()
-  elseif cx==4 then --stop/play was pressed
+  elseif cx == 4 then --stop/play was pressed
    if playing then
     stop()
    else
     play()
    end
-  elseif cx==6 or cx==7 then --skip was pressed
+  elseif cx == 6 or cx == 7 then --skip was pressed
    skip(true)
-  elseif cx>=9 and (not miniMode and cx<=15 or miniMode and cx<=10) then --shuffle was pressed
+  elseif cx >= 9 and (not miniMode and cx <= 15 or miniMode and cx <= 10) then --shuffle was pressed
    shuffle = not shuffle
-  elseif (not miniMode and cx>=17 and cx<=20) or (miniMode and cx==12) then --loop was pressed
+  elseif (not miniMode and cx >= 17 and cx <= 20) or (miniMode and cx == 12) then --loop was pressed
    loop = not loop 
-  elseif tooManyDisks and cx==w-4 and displayStart>0 then --up was pressed
+  elseif tooManyDisks and cx == w - 4 and displayStart > 0 then --up was pressed
    displayStart = displayStart - 1
-  elseif tooManyDisks and cx==w-2 and displayStart<#disks-(h-2) then --down was pressed
+  elseif tooManyDisks and cx == w - 2 and displayStart < #disks - (h - 2) then --down was pressed
    displayStart = displayStart + 1
-  elseif cx==w then --preferences button was pressed
+  elseif showPref and cx == w then --preferences button was pressed
    stop()
    if changePref() then
     return
