@@ -76,8 +76,8 @@ Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
  - [**All the Mods 7**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-7) - **1.18.2** - *v0.4.34*
  - [**DawnCraft - An Adventure RPG Modpack**](https://www.curseforge.com/minecraft/modpacks/dawn-craft) - **1.18.2** - *v1.26*
  - [**TNP Limitless 5**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-5) - **1.18.2** - *v2.33.0*
- - [**TNP Limitless 4**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-4) - **1.18.2** - *v1.1.0*
- - [**Crazy Craft Updated**](https://www.curseforge.com/minecraft/modpacks/crazy-craft-updated) - **1.17.1** - *v0.9.6*
+ - [**TNP Limitless 4**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-4) - **1.17.1** - *v1.1.0*
+ - [**Crazy Craft Updated**](https://www.curseforge.com/minecraft/modpacks/crazy-craft-updated) - **1.16.5** - *v0.9.6*
  - [**TNP Limitless 3**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-3) - **1.16.5** - *v1.15.0*
  - [**Roguelike Adventures and Dungeons 2**](https://www.curseforge.com/minecraft/modpacks/roguelike-adventures-and-dungeons-2) - **1.16.5** - *v1.5*
  - [**FTB Presents Direwolf20 1.16**](https://www.feed-the-beast.com/modpack/79_ftb_presents_direwolf20_1_16) - **1.16.5** - *v1.12.0*
