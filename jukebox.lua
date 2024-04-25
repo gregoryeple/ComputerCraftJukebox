@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.4.1
+version 1.4.2
 
 Free to distribute/alter
 so long as proper credit to original
