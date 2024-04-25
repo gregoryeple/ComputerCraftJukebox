@@ -34,7 +34,7 @@ function loadJukebox()
     print("A disk drive contains an invalid item")
     term.setTextColor(colors.white)
    end
-  elseif peripheral.getType(v )== "monitor" then
+  elseif peripheral.getType(v)== "monitor" then
    mon = peripheral.wrap(v)
   end
  end
@@ -583,6 +583,7 @@ lengths["??Symphony - vs Titans"]=148 --Cataclysm Mod
 lengths["??Symphony - Endless Storm"]=143 --Cataclysm Mod
 lengths["Ean Grimm - Eternal"]=148 --Cataclysm Mod
 lengths["Sinyells - Monster Fight"]=184 --Cataclysm Mod
+lengths["Hippo0824 - Sands of Dominion"]=144 --Cataclysm Mod
 lengths["C418 - Minecraft"]=234 --Charm
 lengths["C418 - Clark"]=192 --Charm
 lengths["C418 - Sweden"]=216 --Charm
@@ -620,8 +621,10 @@ lengths["RedWolf - The Bright Side"]=160 --Create Confectionery
 lengths["Ashes"]=94 --Desolation (Forge)
 lengths["BooWho - coconut"]=110 --Ecologics
 lengths["Kitsune² - Parousia"]=185 --Eidolon
+lengths["_humanoid - sprog"]=86 --Enlightend
 lengths["hatsondogs - Leaving Home"]=155 --Environmental
 lengths["Mista Jub - Slabrave"]=112 --Environmental
+lengths["RENREN - Slabrave"]=112 --Environmental
 lengths["Swordland"]=195 --ExtraBotany
 lengths["Salvation"]=48 --ExtraBotany
 lengths["Mr. Esuoh - Crashing Tides"]=176 --Fins and Tails
@@ -644,6 +647,7 @@ lengths["Cama - calidum"]=196 --Integrated Dungeons and Structures
 lengths["Cama - Forlorn"]=144 --Integrated Stronghold
 lengths["Cama - sight"]=160 --Integrated Stronghold
 lengths["izofar - Bastille Blues"]=200 --It Takes a Pillage
+lengths["CF28 - Mournful Abyss"]=289 --Iter RPG
 lengths["Construct Dance Mix"]=164 --Mana and Artifice
 lengths["Monkey Warhol - Magnum"]=90 --Meet Your Fight
 lengths["LudoCrypt - Petiole"]=160 --Mowzie's Mobs
@@ -657,6 +661,7 @@ lengths["baggu - seapig"]=121 --Odd Water Mobs
 lengths["Valve - Still Alive"]=180 --Portal Gun
 lengths["Valve - Radio Loop"]=22 --Portal Gun
 lengths["Valve - Want You Gone"]=140 --Portal Gun
+lengths["Mouse.Avi Scream - Unkown Artist"]=9 --Pyrologer And Friends
 lengths["Water Droplets"]=20 --Quark
 lengths["Ocean Waves"]=16 --Quark
 lengths["Rainy Mood"]=5 --Quark
@@ -675,6 +680,7 @@ lengths["Emile van Krieken - Ascending Dawn"]=350 --The Aether --Aether II
 lengths["Noisestorm - Aether Tune"]=150 --The Aether
 lengths["Voyed - Welcoming Skies"]=217 --The Aether
 lengths["Jon Lachney - Legacy"]=296 --The Aether
+lengths["Emile van Krieken - Labyrinth's Vengeance"]=214 --The Aether: Redux
 lengths["Voog2 - Astatos"]=366 --The Betweenlands
 lengths["Voog2 - Between You And Me"]=300 --The Betweenlands
 lengths["Voog2 - Christmas On The Marsh"]=220 --The Betweenlands
@@ -719,6 +725,12 @@ lengths["Frox - Trade Winds"]=240 --Tropicraft
 lengths["Frox - Eastern Isles"]=370 --Tropicraft
 lengths["Billy Christiansen - Summering"]=295 --Tropicraft
 lengths["Mili -  Iron Lotus"]=236 --Twilight Delight
+lengths["Parallel - ComaMedia"]=130 --Ulterlands
+lengths["Elderwind - Harumachi"]=195 --Ulterlands
+lengths["Requiem - BalanceBay"]=625 --Ulterlands
+lengths["RedWolf - Endstone Golem Theme"]=182 --Unusual End
+lengths["RedWolf - Flying Ships"]=197 --Unusual End
+lengths["hatsondogs - Atlantis"]=115 --Upgrade Aquatic
 lengths["C418 - dog"]=146 --Variant16x
 lengths["C418 - eleven"]=70 --Variant16x
 lengths["Bramble"]=122 --ViesCraft Machines
