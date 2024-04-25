@@ -4,7 +4,7 @@ A revised version of the Jukebox program originally made by **The Juice**. ([Ori
 
 Added some features and improvements as well as modded music disc support.
 
-Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
+Pastebin: [6Kk7xMkS](https://pastebin.com/6Kk7xMkS)
 
 # Supported Mods
 
@@ -29,6 +29,7 @@ Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
  - [**Desolation (Forge)**](https://www.curseforge.com/minecraft/mc-mods/desolation-forge) - *1 disc*
  - [**Ecologics**](https://www.curseforge.com/minecraft/mc-mods/ecologics) - *1 disc*
  - [**Eidolon**](https://www.curseforge.com/minecraft/mc-mods/eidolon) - *1 disc*
+ - [**Enlightend**](https://www.curseforge.com/minecraft/mc-mods/enlightend) - *1 disc*
  - [**Environmental**](https://www.curseforge.com/minecraft/mc-mods/environmental) - *2 discs*
  - [**ExtraBotany**](https://www.curseforge.com/minecraft/mc-mods/extrabotany) - *1 disc*
  - [**Fins and Tails**](https://www.curseforge.com/minecraft/mc-mods/fins-and-tails) - *1 disc*
@@ -39,13 +40,15 @@ Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
  - [**Integrated Dungeons and Structures**](https://www.curseforge.com/minecraft/mc-mods/idas) - *2 discs*
  - [**Integrated Stronghold**](https://www.curseforge.com/minecraft/mc-mods/integrated-stronghold) - *2 discs*
  - [**It Takes a Pillage**](https://www.curseforge.com/minecraft/mc-mods/it-takes-a-pillage) - *1 disc*
- - [**L_Ender 's Cataclysm**](https://www.curseforge.com/minecraft/mc-mods/l_ender-s-cataclysm) - *6 discs*
+ - [**Iter RPG**](https://www.curseforge.com/minecraft/mc-mods/iter-rpg) - *1 disc*
+ - [**L_Ender 's Cataclysm**](https://www.curseforge.com/minecraft/mc-mods/l_ender-s-cataclysm) - *7 discs*
  - [**Mana and Artifice**](https://www.curseforge.com/minecraft/mc-mods/mana-and-artifice) - *1 disc*
  - [**Meet Your Fight**](https://www.curseforge.com/minecraft/mc-mods/meet-your-fight) - *1 disc*
  - [**Mowzie's Mobs**](https://www.curseforge.com/minecraft/mc-mods/mowzies-mobs) - *1 disc*
  - [**NuclearCraft: Overhauled**](https://www.curseforge.com/minecraft/mc-mods/nuclearcraft-overhauled) - *4 discs*
  - [**Odd Water Mobs**](https://www.curseforge.com/minecraft/mc-mods/odd-water-mobs) - *3 discs*
  - [**Portal Gun**](https://www.curseforge.com/minecraft/mc-mods/portal-gun) - *3 discs*
+ - [**Pyrologer And Friends**](https://www.curseforge.com/minecraft/mc-mods/pyrologer-and-friends) - *1 disc*
  - [**Quark**](https://www.curseforge.com/minecraft/mc-mods/quark) - *9 discs*
  - [**Rats**](https://www.curseforge.com/minecraft/mc-mods/rats) - *2 discs*
  - [**Simple Farming**](https://www.curseforge.com/minecraft/mc-mods/simple-farming) - *1 disc*
@@ -55,6 +58,7 @@ Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
  - [**Tetra Pak**](https://www.curseforge.com/minecraft/mc-mods/tetra-pak) - *1 disc*
  - [**The Aether**](https://www.curseforge.com/minecraft/mc-mods/aether) - *4 discs*
  - [**The Aether II**](https://www.curseforge.com/minecraft/mc-mods/aether-ii) - *5 discs*
+ - [**The Aether: Redux**](https://www.curseforge.com/minecraft/mc-mods/aether-redux) - *1 disc*
  - [**The Betweenlands**](https://www.curseforge.com/minecraft/mc-mods/angry-pixel-the-betweenlands-mod) - *15 discs*
  - [**The Bumblezone**](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge) - *4 discs*
  - [**The Conjurer**](https://www.curseforge.com/minecraft/mc-mods/the-conjurer) - *1 disc*
@@ -65,13 +69,17 @@ Pastebin: [VnahHTJh](https://pastebin.com/VnahHTJh)
  - [**Tinker I/O**](https://www.curseforge.com/minecraft/mc-mods/tinker-i-o) - *1 disc*
  - [**Tropicraft**](https://www.curseforge.com/minecraft/mc-mods/tropicraft) - *6 discs*
  - [**Twilight Delight**](https://www.curseforge.com/minecraft/mc-mods/twilight-delight) - *1 disc*
+ - [**Ulterlands: Worlds Apart**](https://www.curseforge.com/minecraft/mc-mods/the-ulterlands) - *3 discs*
+ - [**Unusual End**](https://www.curseforge.com/minecraft/mc-mods/unusual-end) - *3 discs*
+ - [**Upgrade Aquatic**](https://www.curseforge.com/minecraft/mc-mods/upgrade-aquatic) - *1 disc*
  - [**Variant16x**](https://www.curseforge.com/minecraft/mc-mods/variant16x) - *2 discs*
  - [**ViesCraft Machines**](https://www.curseforge.com/minecraft/mc-mods/viescraft-airships) - *6 discs*
 
 # Supported Modpacks
  - [**All the Mods 9**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-9) - **1.20.1** - *v0.0.41*
  - [**TNP Limitless 7**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-7) - **1.20.1** - *v0.10.0*
- - [**All the Mods 8**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-8) - **1.19.2** - *v1.0.22*
+ - [**All the Mods 8**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-8) - **1.19.2** - *v1.0.22* 
+ - [**SteamPunk \[LPS\]**](https://www.curseforge.com/minecraft/modpacks/steam-punk) - **1.19.2** - *v22HF*
  - [**TNP Limitless 6**](https://www.curseforge.com/minecraft/modpacks/tnp-limitless-6) - **1.19.2** - *v1.30.0*
  - [**All the Mods 7**](https://www.curseforge.com/minecraft/modpacks/all-the-mods-7) - **1.18.2** - *v0.4.34*
  - [**DawnCraft - An Adventure RPG Modpack**](https://www.curseforge.com/minecraft/modpacks/dawn-craft) - **1.18.2** - *v1.26*
