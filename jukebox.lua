@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.4.2
+version 1.4.3
 
 Free to distribute/alter
 so long as proper credit to original
@@ -551,6 +551,7 @@ lengths["AetherAudio - Aerwhale"]=178 --Aether II
 lengths["Moorziey - Demise"]=300 --Aether II
 lengths["Emile van Krieken - Approaches"]=275 --Aether II
 lengths["Emile van Krieken - ???"]=98 --Aether II
+lengths["Ninni - Fusion"]=238 --Alex's Caves
 lengths["LudoCrypt - Thime"]=315 --Alex's Mobs
 lengths["LudoCrypt - Daze"]=193 --Alex's Mobs
 lengths["Bertsz - Horizon"]=72 --Aquamirae
@@ -559,6 +560,7 @@ lengths["Firel - Aria Biblio"]=252 --Ars Nouveau
 lengths["Thistle - The Sound of Glass"]=184 --Ars Nouveau
 lengths["Firel - The Wild Hunt"]=120 --Ars Nouveau
 lengths["Mista Jub - Fox"]=118 --Berry Good
+lengths["RENREN - Fox"]=118 --Berry Good
 lengths["Firel - Strange And Alien"]=266 --BetterEnd Forge
 lengths["Firel - Grasping At Stars"]=528 --BetterEnd Forge
 lengths["Firel - Endseeker"]=462 --BetterEnd Forge
@@ -617,10 +619,13 @@ lengths["C418 - Mice on Venus"]=282 --Charm --Rats
 lengths["C418 - Living Mice"]=178 --Charm --Rats
 lengths["Shroomy - Drift"]=146 --Cloud Storage
 lengths["Dance with Golems -Flan"]=360 --Craft and hunt
+lengths["Kevin MacLeod - Casa Bossa Nova"]=188 --Create: Connected
+lengths["Kevin MacLeod - Local Forecast - Elevator"]=188 --Create: Connected
 lengths["RedWolf - The Bright Side"]=160 --Create Confectionery
 lengths["Ashes"]=94 --Desolation (Forge)
 lengths["BooWho - coconut"]=110 --Ecologics
 lengths["Kitsune² - Parousia"]=185 --Eidolon
+lengths["Ultrasyd - 7F Patterns"]=222 --Embers Rekindled
 lengths["_humanoid - sprog"]=86 --Enlightend
 lengths["hatsondogs - Leaving Home"]=155 --Environmental
 lengths["Mista Jub - Slabrave"]=112 --Environmental
@@ -649,8 +654,10 @@ lengths["Cama - sight"]=160 --Integrated Stronghold
 lengths["izofar - Bastille Blues"]=200 --It Takes a Pillage
 lengths["CF28 - Mournful Abyss"]=289 --Iter RPG
 lengths["Construct Dance Mix"]=164 --Mana and Artifice
+lengths["BoxCat Games - Trace Route"]=35 --MatterOverdrive
 lengths["Monkey Warhol - Magnum"]=90 --Meet Your Fight
 lengths["LudoCrypt - Petiole"]=160 --Mowzie's Mobs
+lengths["RENREN - Hullabaloo"]=135 --Neapolitan
 lengths["Dion - The Wanderer"]=167 --NuclearCraft
 lengths["Skeeter Davis - The End of the World"]=178 --NuclearCraft
 lengths["Dire Straits - Money For Nothing"]=315 --NuclearCraft
@@ -674,12 +681,15 @@ lengths["Kain Vinosec - Endermosh"]=190 --Quark
 lengths["Bearfan - Nourish"]=130 --Simple Farming
 lengths["Luz - Frosty Snig"]=186 --Snow Pig
 lengths["STiiX - A Carol"]=160 --Snowy Spirit
+lengths["LudoCrypt - scour"]=249 --Sully's Mod
 lengths["Partyp - Pancake Music"]=230 --Supplementaries
 lengths["FantomenK - Playing With Power"]=290 --Tetra Pak
 lengths["Emile van Krieken - Ascending Dawn"]=350 --The Aether --Aether II
 lengths["Noisestorm - Aether Tune"]=150 --The Aether
 lengths["Voyed - Welcoming Skies"]=217 --The Aether
 lengths["Jon Lachney - Legacy"]=296 --The Aether
+lengths["RENREN - chinchilla"]=164 --The Aether
+lengths["RENREN - high"]=141 --The Aether
 lengths["Emile van Krieken - Labyrinth's Vengeance"]=214 --The Aether: Redux
 lengths["Voog2 - Astatos"]=366 --The Betweenlands
 lengths["Voog2 - Between You And Me"]=300 --The Betweenlands
@@ -717,6 +727,7 @@ lengths["Screem - Mammoth"]=196 --The Undergarden
 lengths["Screem - Limax Maximus"]=163 --The Undergarden
 lengths["Screem - Relict"]=189 --The Undergarden
 lengths["Screem - Gloomper Anthem"]=206 --The Undergarden
+lengths["An AI was given an image of a Gloomper and made this song"]=160 --The Undergarden
 lengths["Lonesome Avenue (YouTube Audio Library)"]=185 --Tinker I/O
 lengths["Emile Van Krieken - The Tribe"]=154 --Tropicraft
 lengths["Punchaface - Buried Treasure"]=360 --Tropicraft
@@ -739,8 +750,33 @@ lengths["Dire"]=186 --ViesCraft Machines
 lengths["Jungle"]=168 --ViesCraft Machines
 lengths["Storms"]=98 --ViesCraft Machines
 lengths["Timescar"]=145 --ViesCraft Machines
+lengths["rose - rain"]=123 -- Windswept
+lengths["rose - snow"]=120 -- Windswept
+lengths["rose - bumblebee"]=54 -- Windswept
 
 names={} --modded discs with incorrect item descriptions
+
+names["item.record.ascending_dawn.desc"] = "Emile van Krieken - Ascending Dawn"
+names["item.record.aether_tune.desc"] = "Noisestorm - Aether Tune"
+names["item.record.astatos.desc"] = "Voog2 - Astatos"
+names["item.record.between_you_and_me.desc"] = "Voog2 - Between You And Me"
+names["item.record.christmas_on_the_marsh.desc"] = "Voog2 - Christmas On The Marsh"
+names["item.record.the_explorer.desc"] = "Voog2 - The Explorer"
+names["item.record.hag_dance.desc"] = "Voog2 - Hag Dance"
+names["item.record.lonely_fire.desc"] = "Voog2 - Lonely Fire"
+names["item.record.16612.desc"] = "..."
+names["item.record.record_wanderer.desc"] = "Dion - The Wanderer"
+names["item.record.record_end_of_the_world.desc"] = "Skeeter Davis - The End of the World"
+names["item.record.record_money_for_nothing.desc"] = "Dire Straits - Money For Nothing"
+names["item.record.record_hyperspace.desc"] = "Ur-Quan Master - Hyperspace"
+names["item.record.ancient.desc"] = "Voog2 - Ancient"
+names["item.record.beneath_a_green_sky.desc"] = "Voog2 - Beneath A Green Sky"
+names["item.record.dj_wights_mixtape.desc"] = "Voog2 - Rave In A Cave"
+names["item.record.onwards.desc"] = "Voog2 - Onwards"
+names["item.record.stuck_in_the_mud.desc"] = "Voog2 - Stuck In The Mud"
+names["item.record.wandering_wisps.desc"] = "Voog2 - Wandering Wisps"
+names["item.record.waterlogged.desc"] = "Voog2 - Waterlogged"
+names["item.record.matteroverdrive.transformation.desc"] = "BoxCat Games - Trace Route"
 names["item.blue_skies.blinding_rage.desc"] = "Jonathing - Blinding Rage"
 names["item.blue_skies.defying_starlight.desc"] = "Jonathing - Defying Starlight"
 names["item.blue_skies.venomous_encounter.desc"] = "Jonathing - Venomous Encounter"
