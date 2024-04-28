@@ -4,15 +4,19 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.4.4
+version 1.5.0
 
 Free to distribute/alter
 so long as proper credit to original
 author is maintained.
 
-Simply connect some drives with music disks
+Simply connect some drives with music discs
 and an advanced monitor (at least two blocks wide)
 in any way and start this program
+
+The monitor must be at least 2 blocks high
+to access the basic preferences
+or 3 blocks high to access the advanced preferences
 
 --]]
 
@@ -34,62 +38,84 @@ function loadJukebox()
     print("A disk drive contains an invalid item")
     term.setTextColor(colors.white)
    end
-  elseif peripheral.getType(v)== "monitor" then
+  elseif peripheral.getType(v) == "monitor" then
    mon = peripheral.wrap(v)
   end
  end
  per = nil
-
  table.sort(drives, sortDriveByTitle)
+ duplicateDrives = {}
+ duplicateCount = 0
+ if playDuplicate then
+  for i=#drives,2,-1 do
+   if getAudioTitle(drives[i]) == getAudioTitle(drives[i-1]) then
+    if duplicateDrives[getAudioTitle(drives[i])] == nil then
+	 duplicateDrives[getAudioTitle(drives[i])] = {}
+	 duplicateCount = duplicateCount + 1
+    end
+    duplicateDrives[getAudioTitle(drives[i])][#duplicateDrives[getAudioTitle(drives[i])]+1] = drives[i]
+    table.remove(drives, i)
+   end
+  end
+ end
  disks = {}
  for k,v in pairs(drives) do
   disks[k] = getAudioTitle(drives[k])
  end
  print("Loaded " .. table.getn(disks) .. " tracks")
+ if playDuplicate and duplicateCount > 0 then
+  print(duplicateCount .. " of those tracks have duplicates")
+ end
 end
 
-function loadPref()
- if not fs.exists("jukeboxconfig") then
-  setColors.text=colors.white
-  setColors.background=colors.black
-  setColors.skip=colors.blue
-  setColors.enabled=colors.green
-  setColors.disabled=colors.red
-  setColors.selected=colors.green
-  setColors.progress1=colors.lightBlue
-  setColors.progress2=colors.cyan
-  setColors.progress3=colors.blue
-  setColors.prefBack=colors.blue
-  setColors.prefText=colors.white
+function loadPref(reloading)
+ if not fs.exists(configFile) then
+  setColors.text = colors.white
+  setColors.background = colors.black
+  setColors.skip = colors.blue
+  setColors.enabled = colors.green
+  setColors.disabled = colors.red
+  setColors.selected = colors.green
+  setColors.progress1 = colors.lightBlue
+  setColors.progress2 = colors.cyan
+  setColors.progress3 = colors.blue
+  setColors.duplicateText = colors.yellow
+  setColors.prefBack = colors.blue
+  setColors.prefText = colors.white
 
  else
-  local fil=fs.open("jukeboxconfig","r")
+  local fil = fs.open(configFile,"r")
 
-  setColors.text=tonumber(fil.readLine())
-  setColors.background=tonumber(fil.readLine())
-  setColors.skip=tonumber(fil.readLine())
-  setColors.enabled=tonumber(fil.readLine())
-  setColors.disabled=tonumber(fil.readLine())
-  setColors.selected=tonumber(fil.readLine())
-  setColors.progress1=tonumber(fil.readLine())
-  setColors.progress2=tonumber(fil.readLine())
-  setColors.progress3=tonumber(fil.readLine())
-  setColors.prefBack=tonumber(fil.readLine())
-  setColors.prefText=tonumber(fil.readLine())
+  setColors.text = tonumber(fil.readLine())
+  setColors.background = tonumber(fil.readLine())
+  setColors.skip = tonumber(fil.readLine())
+  setColors.enabled = tonumber(fil.readLine())
+  setColors.disabled = tonumber(fil.readLine())
+  setColors.selected = tonumber(fil.readLine())
+  setColors.progress1 = tonumber(fil.readLine())
+  setColors.progress2 = tonumber(fil.readLine())
+  setColors.progress3 = tonumber(fil.readLine())
+  setColors.duplicateText = tonumber(fil.readLine())
+  setColors.prefBack = tonumber(fil.readLine())
+  setColors.prefText = tonumber(fil.readLine())
 
-  playing=fil.readLine()=="true"
-  shuffle=fil.readLine()=="true"
-  loop=fil.readLine()=="true"
-  playingDefault=playing
-  shuffleDefault=shuffle
-  loopDefault=loop
+  playingDefault = fil.readLine() == "true"
+  shuffleDefault = fil.readLine() == "true"
+  loopDefault = fil.readLine() == "true"
+  playDuplicate = fil.readLine() ~= "false"
+  fullProgressLine = fil.readLine() == "true"
+  if not reloading then
+   playing = playingDefault
+   shuffle = shuffleDefault
+   loop = loopDefault
+  end
 
   fil.close()
  end
 end
 
 function savePref()
- fil=fs.open("jukeboxconfig","w")
+ fil=fs.open(configFile,"w")
  fil.writeLine(setColors.text)
  fil.writeLine(setColors.background)
  fil.writeLine(setColors.skip)
@@ -99,18 +125,24 @@ function savePref()
  fil.writeLine(setColors.progress1)
  fil.writeLine(setColors.progress2)
  fil.writeLine(setColors.progress3)
+ fil.writeLine(setColors.duplicateText)
  fil.writeLine(setColors.prefBack)
  fil.writeLine(setColors.prefText) 
 
  fil.writeLine(playingDefault)
  fil.writeLine(shuffleDefault)
  fil.writeLine(loopDefault)
+ fil.writeLine(playDuplicate)
+ fil.writeLine(fullProgressLine)
 
  fil.close()
 end
 
 function changePref()
  while true do
+  w, h = mon.getSize()
+  showColor = h >= minColorSize and w >= minColorSize
+
   mon.setBackgroundColor(colors.black)
   mon.setTextColor(colors.white)
   mon.clear()
@@ -118,40 +150,17 @@ function changePref()
   mon.setCursorPos(1,1)
   mon.write("Preferences")
 
-  mon.setCursorPos(1,3)
-  mon.write("Edit colors")
-
-  mon.setCursorPos(1,4)
-  if playingDefault then
-   mon.setBackgroundColor(colors.green)
-  else
-   mon.setBackgroundColor(colors.red)
+  if showColor then
+   mon.setCursorPos(1,3)
+   mon.write("Edit colors")
   end
-  mon.write("Play by default")
-
-  mon.setCursorPos(1,5)
-  if shuffleDefault then
-   mon.setBackgroundColor(colors.green)
-  else
-   mon.setBackgroundColor(colors.red)
-  end
-  mon.write("Shuffle by default")
-
-  mon.setCursorPos(1,6)
-  if loopDefault then
-   mon.setBackgroundColor(colors.green)
-  else
-   mon.setBackgroundColor(colors.red)
-  end
-  mon.write("Loop by default")
-
-  mon.setCursorPos(1, 14)
-  if playing then
-   mon.setBackgroundColor(colors.green)
-  else
-   mon.setBackgroundColor(colors.red)
-  end
-  mon.write("Cacophony")
+  
+  writePref(4, "Play by default", playingDefault)
+  writePref(5, "Shuffle by default", shuffleDefault)
+  writePref(6, "Loop by default", loopDefault)
+  writePref(14, "Handle duplicates", playDuplicate)
+  writePref(15, "Full progress bar", fullProgressLine)
+  writePref(17, "Cacophony", playing)
 
   mon.setBackgroundColor(colors.blue)
   mon.setCursorPos(1, 8)
@@ -168,13 +177,13 @@ function changePref()
   mon.setCursorPos(1, 12)
   mon.write("Back")
 
-  mon.setCursorPos(1, 16)
+  mon.setCursorPos(1, 19)
   mon.write("Close jukebox")
 
   local eve,id,cx,cy
   eve,id,cx,cy=os.pullEvent("monitor_touch")
 
-  if cy==3 then
+  if showColor and cy==3 then
    changeColors()
   elseif cy==4 then
    playingDefault = not playingDefault
@@ -187,22 +196,37 @@ function changePref()
   elseif cy==10 then
    savePref()
   elseif cy==11 then
-   loadPref()
+   loadPref(true)
   elseif cy==12 then
    stop()
    return false
   elseif cy==14 then
+   playDuplicate = not playDuplicate
+   loadJukebox()
+  elseif cy==15 then
+   fullProgressLine = not fullProgressLine
+  elseif cy==17 then
    if playing then
     stop()
    else
     playAll()
    end
-  elseif cy==16 then
+  elseif cy==19 then
    stop()
    return true
   end
-  
+
  end
+end
+
+function writePref(pos, name, active)
+  mon.setCursorPos(1, pos)
+  if active then
+   mon.setBackgroundColor(colors.green)
+  else
+   mon.setBackgroundColor(colors.red)
+  end
+  mon.write(name)
 end
 
 function changeColors()
@@ -211,140 +235,85 @@ function changeColors()
   mon.clear()
 
   mon.setCursorPos(1,1)
-  mon.setTextColor(setColors.text)
-  if setColors.text==colors.black then
-   mon.setBackgroundColor(colors.white)
-  end
-  mon.write("Text")
+  mon.setTextColor(colors.white)
+  mon.write("Colors")
 
-  mon.setCursorPos(1,2)
-  mon.setBackgroundColor(setColors.background)
-  if setColors.background==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Background")
+  writeColor(3, "Text", setColors.text, false)
+  writeColor(4, "Background", setColors.background, true)
+  writeColor(5, "Skip buttons", setColors.skip, true)
+  writeColor(6, "Enabled", setColors.enabled, true)
+  writeColor(7, "Disabled", setColors.disabled, true)
+  writeColor(8, "Selected track", setColors.selected, true)
+  writeColor(9, "Progress 1", setColors.progress1, true)
+  writeColor(10, "Progress 2", setColors.progress2, true)
+  writeColor(11, "Progress 3", setColors.progress3, true)
+  writeColor(12, "Duplicate track text", setColors.duplicateText, false)
+  writeColor(13, "p button background", setColors.prefBack, true)
+  writeColor(14, "p button text", setColors.prefText, false)
 
-  mon.setCursorPos(1,3)
-  mon.setBackgroundColor(setColors.skip)
-  if setColors.skip==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Skip buttons")
-
-  mon.setCursorPos(1,4)
-  mon.setBackgroundColor(setColors.enabled)
-  if setColors.enabled==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Enabled")
-
-  mon.setCursorPos(1,5)
-  mon.setBackgroundColor(setColors.disabled)
-  if setColors.disabled==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Disabled")
-  
-  mon.setCursorPos(1,6)
-  mon.setBackgroundColor(setColors.selected)
-  if setColors.selected==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Selected track")
-
-  mon.setCursorPos(1,7)
-  mon.setBackgroundColor(setColors.progress1)
-  if setColors.progress1==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Progress1")
-
-  mon.setCursorPos(1,8)
-  mon.setBackgroundColor(setColors.progress2)
-  if setColors.progress2==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Progress2")
-
-  mon.setCursorPos(1,9)
-  mon.setBackgroundColor(setColors.progress3)
-  if setColors.progress3==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("Progress3")
-  
-  mon.setCursorPos(1,10)
-  mon.setBackgroundColor(setColors.prefBack)
-  if setColors.prefBack==colors.white then
-   mon.setTextColor(colors.black)
-  else
-   mon.setTextColor(colors.white)
-  end
-  mon.write("p button background")
-
-  mon.setCursorPos(1,11)
-  mon.setTextColor(setColors.prefText)
-  if setColors.prefText==colors.black then
-   mon.setBackgroundColor(colors.white)
-  else
-   mon.setBackgroundColor(colors.black)
-  end
-  mon.write("p button text")
-
-  mon.setCursorPos(1,13)
+  mon.setCursorPos(1,16)
   mon.setBackgroundColor(colors.black)
   mon.setTextColor(colors.white)
-  mon.write("back")
+  mon.write("Back")
 
   local eve,id,cx,cy
   eve,id,cx,cy=os.pullEvent("monitor_touch")
 
-  if cy==1 then
-   setColors.text=colorPicker()
-  elseif cy==2 then
-   setColors.background=colorPicker()
-  elseif cy==3 then
-   setColors.skip=colorPicker()
-  elseif cy==4 then
-   setColors.enabled=colorPicker()
-  elseif cy==5 then
-   setColors.disabled=colorPicker()
-  elseif cy==6 then
-   setColors.selected=colorPicker()
-  elseif cy==7 then
-   setColors.progress1=colorPicker()
-  elseif cy==8 then
-   setColors.progress2=colorPicker()
-  elseif cy==9 then
-   setColors.progress3=colorPicker()
-  elseif cy==10 then
-   setColors.prefBack=colorPicker()
-  elseif cy==11 then
-   setColors.prefText=colorPicker()
-  elseif cy==13 then
+  if cy >= 3 and cy <= 14 then
+   mon.setCursorPos(1,cy)
+   mon.write(">")
+  end
+  if cy == 3 then
+   setColors.text = colorPicker(setColors.text)
+  elseif cy == 4 then
+   setColors.background = colorPicker(setColors.background)
+  elseif cy == 5 then
+   setColors.skip = colorPicker(setColors.skip)
+  elseif cy == 6 then
+   setColors.enabled = colorPicker(setColors.enabled)
+  elseif cy == 7 then
+   setColors.disabled = colorPicker(setColors.disabled)
+  elseif cy == 8 then
+   setColors.selected = colorPicker(setColors.selected)
+  elseif cy == 9 then
+   setColors.progress1 = colorPicker(setColors.progress1)
+  elseif cy == 10 then
+   setColors.progress2 = colorPicker(setColors.progress2)
+  elseif cy == 11 then
+   setColors.progress3 = colorPicker(setColors.progress3)
+  elseif cy == 12 then
+   setColors.duplicateText = colorPicker(setColors.duplicateText)
+  elseif cy == 13 then
+   setColors.prefBack = colorPicker(setColors.prefBack)
+  elseif cy == 14 then
+   setColors.prefText = colorPicker(setColors.prefText)
+  elseif cy == 16 then
    return
   end
 
  end
 end
 
-function colorPicker()
+function writeColor(pos, name, color, background)
+ mon.setCursorPos(1,pos)
+ mon.setBackgroundColor(colors.black)
+ mon.setTextColor(colors.white)
+ mon.write("-")
+ if background then
+  mon.setBackgroundColor(color)
+  if color == colors.white then
+   mon.setTextColor(colors.black)
+  end
+ else
+  mon.setTextColor(color)
+  if color == colors.black then
+   mon.setBackgroundColor(colors.white)
+  end
+ end
+ mon.write(name)
+end
+
+function colorPicker(defaultColor)
  mon.setCursorPos(15,1)
  mon.setBackgroundColor(colors.white)
  mon.write(" ")
@@ -385,46 +354,55 @@ function colorPicker()
  mon.setBackgroundColor(colors.pink)
  mon.write(" ")
 
+ mon.setCursorPos(15,5)
+ mon.setBackgroundColor(defaultColor)
+ if defaultColor == colors.white then
+  mon.setTextColor(colors.black)
+ else
+ mon.setTextColor(colors.white)
+ end
+ mon.write("Keep")
+
  local eve,id,cx,cy
  repeat
   eve,id,cx,cy=os.pullEvent("monitor_touch")
- until cx>=15 and cy<=4 and cx<=18 and cy>=1
+ until cx >= 15 and cy <= 5 and cx <= 18 and cy >= 1
  cx=cx-14
  
- if cx==1 and cy==1 then
+ if cx == 1 and cy == 1 then
   return colors.white
- elseif cx==2 and cy==1 then
+ elseif cx == 2 and cy == 1 then
   return colors.lightGray
- elseif cx==3 and cy==1 then
+ elseif cx == 3 and cy == 1 then
   return colors.gray
- elseif cx==4 and cy==1 then
+ elseif cx == 4 and cy == 1 then
   return colors.black
- elseif cx==1 and cy==2 then
+ elseif cx == 1 and cy == 2 then
   return colors.blue
- elseif cx==2 and cy==2 then
+ elseif cx == 2 and cy == 2 then
   return colors.cyan
- elseif cx==3 and cy==2 then
+ elseif cx == 3 and cy == 2 then
   return colors.lightBlue
- elseif cx==4 and cy==2 then
+ elseif cx == 4 and cy == 2 then
   return colors.brown
- elseif cx==1 and cy==3 then
+ elseif cx == 1 and cy == 3 then
   return colors.green
- elseif cx==2 and cy==3 then
+ elseif cx == 2 and cy == 3 then
   return colors.lime
- elseif cx==3 and cy==3 then
+ elseif cx == 3 and cy == 3 then
   return colors.orange
- elseif cx==4 and cy==3 then
+ elseif cx == 4 and cy == 3 then
   return colors.yellow
- elseif cx==1 and cy==4 then
+ elseif cx == 1 and cy == 4 then
   return colors.red
- elseif cx==2 and cy==4 then
+ elseif cx == 2 and cy == 4 then
   return colors.purple
- elseif cx==3 and cy==4 then
+ elseif cx == 3 and cy == 4 then
   return colors.magenta
- elseif cx==4 and cy==4 then
+ elseif cx == 4 and cy == 4 then
   return colors.pink
- else
-  error("uh oh! tell my daddy im broke!")
+ elseif cy == 5 then
+  return defaultColor
  end
 end
 
@@ -446,6 +424,11 @@ function playAll() --starts all discs
  for k,v in pairs(drives) do
   v.playAudio()
  end
+ for k,duplicates in pairs(duplicateDrives) do
+  for k,v in pairs(duplicates) do
+   v.playAudio()
+  end
+ end
 end
 
 function play() --starts playback
@@ -453,6 +436,11 @@ function play() --starts playback
  timer=os.startTimer(lengths[disks[track]])
  tickTimer=os.startTimer(0.25)
  drives[track].playAudio()
+ if playDuplicate and duplicateDrives[getAudioTitle(drives[track])] ~= nil then
+  for k,v in pairs(duplicateDrives[getAudioTitle(drives[track])]) do
+   v.playAudio()
+  end
+ end
 end
 
 function skip(playNext) --skips to the next track
@@ -834,8 +822,10 @@ names["§5Firel§r - §fEo Dracona§r"] = "Firel - Eo Dracona"
 
 drives = {} --all the drives with audio wrapped in one variable. handy, right?
 disks = {} --the name of the disk in the drive in the same corresponding 'drives' drive
+duplicateDrives = {} --if 'playDuplicate' is set to true, store the drives with a track already inside 'drives'
 setColors={}
 
+configFile = "jukebox.ini" --name of the config file
 playing=false --i'm not going to insult you by explaining this one
 shuffle=false --when true; selects a random track when track is over
 loop=false --when true; loop the current track
@@ -846,13 +836,16 @@ track=1 --selected track
 timer=0 --token of the timer that signals the end of a track
 elapsed=0 --time that track was started
 tickTimer=0 --token of the timer that signals to update 'elapsed'
-minSize=21 --size under which buttons labels are shorten
-minPrefSize=12 --size under which the preference buttons not shown
+minSize=21 --width under which buttons labels are shorten
+minPrefSize=12 --height under which the preference button not shown
+minColorSize=16 --height and width under which the color button not shown
 displayStart=0 --track to start the display on
 tooManyDiscs=false  --set to true when the number of discs is greater than the height of the monitor
+playDuplicate=true --play all the duplicates of the same disc at the same time and show the track only once in the list
+fullProgressLine=false --use the full width of the monitor to display the current track progress instead of the width of the track name
 
+loadPref(false)
 loadJukebox()
-loadPref()
 
 --------------------------------------------------------------------------------
 
@@ -919,17 +912,25 @@ repeat --main loop
  for k,v in pairs(disks) do --drawing tracks
   if k > displayStart then
    mon.setCursorPos(1,k+2-displayStart)
-   if k==track then
+   if playDuplicate and duplicateDrives[v] ~= nil then
+    mon.setTextColor(setColors.duplicateText)
+   else
+    mon.setTextColor(setColors.text)
+   end
+   if k == track then
+    if fullProgressLine then
+     v = string.format("%-" .. w .. "s", v);
+    end
     mon.setBackgroundColor(setColors.progress3)
-    local leng=math.min(string.len(v), w)
-    local blueLeng=(elapsed)/lengths[disks[track]]*leng
+    local leng = math.min(string.len(v), w)
+    local blueLeng = (elapsed) / lengths[disks[track]] * leng
     for n=1,leng do
-     if n>math.ceil(blueLeng) then
+     if n > math.ceil(blueLeng) then
       mon.setBackgroundColor(colors.green)
-     elseif n==math.ceil(blueLeng) then
-      if n-blueLeng<.3333 then
+     elseif n == math.ceil(blueLeng) then
+      if n - blueLeng < .3333 then
        mon.setBackgroundColor(setColors.progress3)
-      elseif n-blueLeng<.6666 then
+      elseif n - blueLeng < .6666 then
        mon.setBackgroundColor(setColors.progress2)
       else
        mon.setBackgroundColor(setColors.progress1)
@@ -943,6 +944,7 @@ repeat --main loop
    end
   end
  end
+ mon.setTextColor(setColors.text)
 
  if tooManyDisks then
   mon.setCursorPos(w-4,1)
