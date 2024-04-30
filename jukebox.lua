@@ -4,7 +4,7 @@ Jukebox program
 By The Juice
 Edited by Out-Feu
 
-version 1.5.0
+version 1.5.1
 
 Free to distribute/alter
 so long as proper credit to original
@@ -40,6 +40,7 @@ function loadJukebox()
    end
   elseif peripheral.getType(v) == "monitor" then
    mon = peripheral.wrap(v)
+   mon.setTextScale(textScale)
   end
  end
  per = nil
@@ -127,7 +128,7 @@ function savePref()
  fil.writeLine(setColors.progress3)
  fil.writeLine(setColors.duplicateText)
  fil.writeLine(setColors.prefBack)
- fil.writeLine(setColors.prefText) 
+ fil.writeLine(setColors.prefText)
 
  fil.writeLine(playingDefault)
  fil.writeLine(shuffleDefault)
@@ -836,7 +837,8 @@ track=1 --selected track
 timer=0 --token of the timer that signals the end of a track
 elapsed=0 --time that track was started
 tickTimer=0 --token of the timer that signals to update 'elapsed'
-minSize=21 --width under which buttons labels are shorten
+textScale=1 --scale of the text
+minSize=25 --width under which buttons labels are shorten
 minPrefSize=12 --height under which the preference button not shown
 minColorSize=16 --height and width under which the color button not shown
 displayStart=0 --track to start the display on
@@ -926,7 +928,7 @@ repeat --main loop
     local blueLeng = (elapsed) / lengths[disks[track]] * leng
     for n=1,leng do
      if n > math.ceil(blueLeng) then
-      mon.setBackgroundColor(colors.green)
+      mon.setBackgroundColor(setColors.selected)
      elseif n == math.ceil(blueLeng) then
       if n - blueLeng < .3333 then
        mon.setBackgroundColor(setColors.progress3)
@@ -975,7 +977,7 @@ repeat --main loop
  local eve,id,cx,cy
  repeat
   eve,id,cx,cy=os.pullEvent()
- until eve=="timer" or eve=="monitor_touch"
+ until eve=="timer" or eve=="monitor_touch" or  eve=="monitor_resize"
 
  --test event
  if eve=="timer" then --the timer ended
@@ -986,7 +988,7 @@ repeat --main loop
    elapsed=elapsed+0.25
   end
 
- else --the monitor was pressed
+ elseif eve=="monitor_touch" then --the monitor was pressed
   if cy > 1 then --a track was pressed
    if cy > 2 and cy < #disks + 3 then
     if tooManyDisks then
